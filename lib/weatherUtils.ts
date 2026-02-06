@@ -17,11 +17,11 @@ export const identifyExtremeEvents = (
   
   // Extract values for statistical analysis
   const values = data.map(d => {
-     if (metric === 'temperature_range') {
-        const tmax = (d.temperature_max as MetricData).annual || 0;
-        const tmin = (d.temperature_min as MetricData).annual || 0;
-        return tmax - tmin;
-     } else {
+    //  if (metric === 'temperature_range') {
+    //     const tmax = (d.temperature_max as MetricData).annual || 0;
+    //     const tmin = (d.temperature_min as MetricData).annual || 0;
+    //     return tmax - tmin;
+    //  } else {
         const metricKey = metric as keyof AnnualWeatherData;
          // Ensure we access the 'annual' property safely for object types like MonthlyData
         const val = d[metricKey];
@@ -29,7 +29,7 @@ export const identifyExtremeEvents = (
              return (val as MetricData).annual as number;
         }
         return 0;
-     }
+    //  }
   }).filter(v => !isNaN(v));
 
   if (values.length === 0) return [];
@@ -43,17 +43,17 @@ export const identifyExtremeEvents = (
 
   data.forEach(d => {
     let val = 0;
-    if (metric === 'temperature_range') {
-        const tmax = (d.temperature_max as MetricData).annual || 0;
-        const tmin = (d.temperature_min as MetricData).annual || 0;
-        val = tmax - tmin;
-    } else {
+    // if (metric === 'temperature_range') {
+    //     const tmax = (d.temperature_max as MetricData).annual || 0;
+    //     const tmin = (d.temperature_min as MetricData).annual || 0;
+    //     val = tmax - tmin;
+    // } else {
          const metricKey = metric as keyof AnnualWeatherData;
          const vObj = d[metricKey];
          if (typeof vObj === 'object' && vObj !== null && 'annual' in vObj) {
              val = (vObj as MetricData).annual;
          }
-    }
+    // }
 
     // Heuristics based on Metric Type
     if (metric === 'temperature_max' || metric === 'temperature_mean' || metric === 'temperature_min') {

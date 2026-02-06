@@ -16,6 +16,7 @@ export interface TableRow {
   rainDays: number;
   sunshine: number;
   frostDays: number;
+  [key: string]: string | number | UKRegion;
 }
 
 export interface SummaryStatistics {
