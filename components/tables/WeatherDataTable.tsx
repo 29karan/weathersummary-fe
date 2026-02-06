@@ -69,81 +69,102 @@ export function WeatherDataTable({ data }: WeatherDataTableProps) {
             title: 'Temp (Mean)',
             sortable: true,
             width: 120,
-            render: (row) => (
-              <Badge
-                color={getTemperatureColor(row.temperatureMean)}
-                variant="light"
-                size="sm"
-              >
-                {row.temperatureMean}°C
-              </Badge>
-            ),
+            render: (record) => {
+              const row = record as TableRow;
+              return (
+                <Badge
+                  color={getTemperatureColor(row.temperatureMean)}
+                  variant="light"
+                  size="sm"
+                >
+                  {row.temperatureMean}°C
+                </Badge>
+              );
+            },
           },
           {
             accessor: 'temperatureMin',
             title: 'Temp (Min)',
             sortable: true,
             width: 110,
-            render: (row) => (
-              <Text size="sm" c="blue">
-                {row.temperatureMin}°C
-              </Text>
-            ),
+            render: (record) => {
+              const row = record as TableRow;
+              return (
+                <Text size="sm" c="blue">
+                  {row.temperatureMin}°C
+                </Text>
+              );
+            },
           },
           {
             accessor: 'temperatureMax',
             title: 'Temp (Max)',
             sortable: true,
             width: 110,
-            render: (row) => (
-              <Text size="sm" c="red">
-                {row.temperatureMax}°C
-              </Text>
-            ),
+            render: (record) => {
+              const row = record as TableRow;
+              return (
+                <Text size="sm" c="red">
+                  {row.temperatureMax}°C
+                </Text>
+              );
+            },
           },
           {
             accessor: 'rainfall',
             title: 'Rainfall',
             sortable: true,
             width: 100,
-            render: (row) => (
-              <Badge
-                style={{ backgroundColor: getRainfallColor(row.rainfall) }}
-                variant="filled"
-                size="sm"
-              >
-                {row.rainfall}mm
-              </Badge>
-            ),
+            render: (record) => {
+              const row = record as TableRow;
+              return (
+                <Badge
+                  style={{ backgroundColor: getRainfallColor(row.rainfall) }}
+                  variant="filled"
+                  size="sm"
+                >
+                  {row.rainfall}mm
+                </Badge>
+              );
+            },
           },
           {
             accessor: 'rainDays',
             title: 'Rain Days',
             sortable: true,
             width: 100,
-            render: (row) => <Text size="sm">{row.rainDays}</Text>,
+            render: (record) => {
+              const row = record as TableRow;
+              return <Text size="sm">{row.rainDays}</Text>;
+            },
           },
           {
             accessor: 'sunshine',
             title: 'Sunshine',
             sortable: true,
             width: 100,
-            render: (row) => (
-              <Text size="sm" c="yellow">
-                {row.sunshine}hrs
-              </Text>
-            ),
+            render: (record) => {
+              const row = record as TableRow;
+              return (
+                <Text size="sm" c="yellow">
+                  {row.sunshine}hrs
+                </Text>
+              );
+            },
           },
           {
             accessor: 'frostDays',
             title: 'Frost Days',
             sortable: true,
             width: 100,
-            render: (row) => (
-              <Text size="sm" c="cyan">
-                {row.frostDays}
-              </Text>
-            ),
+            render: (record) => {
+              const row = record as TableRow;
+              return (
+                <Text size="sm" c="cyan">
+                  {row.frostDays}
+                </Text>
+              );
+            },
           },
         ]}
         sortStatus={sortStatus}

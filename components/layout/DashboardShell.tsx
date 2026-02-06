@@ -116,7 +116,7 @@ export function DashboardShell({ children, filters }: DashboardShellProps) {
           {/* Tabs */}
           <Tabs
             value={activeView}
-            onChange={(value: string) => setActiveView(value as 'tables' | 'maps' | 'charts')}
+            onChange={(value: string | null) => value && setActiveView(value as 'tables' | 'maps' | 'charts')}
           >
             <Tabs.List>
               <Tabs.Tab value="tables" leftSection={<IconTable size={16} />}>

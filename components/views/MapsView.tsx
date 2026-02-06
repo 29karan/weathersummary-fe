@@ -21,7 +21,8 @@ import { useInterval } from '@mantine/hooks';
 export function MapsView() {
   
   // State
-  const { selectedYear, setSelectedYear, selectedMetric } = useDashboardStore();
+  const { selectedYear, setSelectedYear, filters } = useDashboardStore();
+  const selectedMetric = filters.metrics[0] || 'temperature_mean';
   const [selectedRegion, setSelectedRegion] = useState<UKRegion | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [isSidePanelOpen, setIsSidePanelOpen] = useState(true);
@@ -30,13 +31,13 @@ export function MapsView() {
 
   // Animation Loop
   const interval = useInterval(() => {
-    setSelectedYear((current) => {
-        if (current >= 2024) {
-            setIsPlaying(false);
-            return 2024;
-        }
-        return current + 1;
-    });
+    const current = selectedYear;
+    if (!current || current >= 2024) {
+        setIsPlaying(false);
+        setSelectedYear(2024);
+    } else {
+        setSelectedYear(current + 1);
+    }
   }, 500);
 
   useEffect(() => {
@@ -50,7 +51,7 @@ export function MapsView() {
 
   // Derived Data
   const mapDataArray = useMemo(() => {
-    return getMapData(selectedYear, selectedMetric);
+    return getMapData(selectedYear || 2024, selectedMetric);
   }, [selectedYear, selectedMetric]);
 
   const mapDataMap = useMemo(() => {
@@ -60,7 +61,7 @@ export function MapsView() {
   }, [mapDataArray]);
 
   const { min, max } = useMemo(() => {
-    return getMetricRange(selectedYear, selectedMetric);
+    return getMetricRange(selectedYear || 2024, selectedMetric);
   }, [selectedYear, selectedMetric]);
   
   const colorScale = useMemo(() => {
@@ -175,7 +176,7 @@ export function MapsView() {
             {/* Bottom Section: Timeline Panel (Static Flow) */}
             <Box style={{ borderTop: '1px solid #eee', background: 'white', zIndex: 15, flexShrink: 0 }}>
                 <BottomTimelinePanel 
-                    selectedYear={selectedYear}
+                    selectedYear={selectedYear || 2024}
                     selectedMetric={selectedMetric}
                     onYearChange={handleYearChange}
                     isPlaying={isPlaying}
@@ -211,7 +212,7 @@ export function MapsView() {
                     setComparisonRegions([]);
                     setIsCompareMode(false);
                 }}
-                year={selectedYear}
+                year={selectedYear || 2022}
                 metric={selectedMetric}
                 colorScale={colorScale}
             />

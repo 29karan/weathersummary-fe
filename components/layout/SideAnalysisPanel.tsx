@@ -79,20 +79,20 @@ export function SideAnalysisPanel({
     const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
     
     // Access the raw monthly data from the mock data based on the metric
-    if (metric === 'temperature_range') {
-        return months.map(m => {
-            const minObj = regionData['temperature_min'] as MetricData;
-            const maxObj = regionData['temperature_max'] as MetricData;
-            const key = m.toLowerCase() as keyof MonthlyData;
-            const minVal = minObj?.[key];
-            const maxVal = maxObj?.[key];
+    // if (metric === 'temperature_range') {
+    //     return months.map(m => {
+    //         const minObj = regionData['temperature_min'] as MetricData;
+    //         const maxObj = regionData['temperature_max'] as MetricData;
+    //         const key = m.toLowerCase() as keyof MonthlyData;
+    //         const minVal = minObj?.[key];
+    //         const maxVal = maxObj?.[key];
             
-            return {
-                label: m,
-                value: (minVal !== undefined && maxVal !== undefined) ? Number((maxVal - minVal).toFixed(1)) : 0
-            };
-        });
-    }
+    //         return {
+    //             label: m,
+    //             value: (minVal !== undefined && maxVal !== undefined) ? Number((maxVal - minVal).toFixed(1)) : 0
+    //         };
+    //     });
+    // }
 
     const metricKey = metric as keyof typeof regionData;
     const dataObj = regionData[metricKey] as MetricData;
@@ -114,20 +114,20 @@ export function SideAnalysisPanel({
 
           let data: { label: string; value: number }[] = [];
 
-          if (metric === 'temperature_range') {
-              data = months.map(m => {
-                  const minObj = item.data!['temperature_min'] as MetricData;
-                  const maxObj = item.data!['temperature_max'] as MetricData;
-                  const key = m.toLowerCase() as keyof MonthlyData;
-                  const minVal = minObj?.[key];
-                  const maxVal = maxObj?.[key];
+        //   if (metric === 'temperature_range') {
+        //       data = months.map(m => {
+        //           const minObj = item.data!['temperature_min'] as MetricData;
+        //           const maxObj = item.data!['temperature_max'] as MetricData;
+        //           const key = m.toLowerCase() as keyof MonthlyData;
+        //           const minVal = minObj?.[key];
+        //           const maxVal = maxObj?.[key];
                   
-                  return {
-                      label: m,
-                      value: (minVal !== undefined && maxVal !== undefined) ? Number((maxVal - minVal).toFixed(1)) : 0
-                  };
-              });
-          } else {
+        //           return {
+        //               label: m,
+        //               value: (minVal !== undefined && maxVal !== undefined) ? Number((maxVal - minVal).toFixed(1)) : 0
+        //           };
+        //       });
+        //   } else {
                const metricKey = metric as keyof AnnualWeatherData;
                const dataObj = item.data![metricKey] as MetricData;
                if (dataObj) {
@@ -136,7 +136,7 @@ export function SideAnalysisPanel({
                        value: Number((dataObj[m.toLowerCase() as keyof MonthlyData] || dataObj.annual).toFixed(1))
                    }));
                }
-          }
+        //   }
 
           return {
               label: item.region.replace(/_/g, ' '),

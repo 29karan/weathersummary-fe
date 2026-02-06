@@ -2,7 +2,7 @@
 
 import { useMemo, useState, useRef, useEffect } from 'react';
 import { geoPath, geoMercator } from 'd3-geo';
-import { zoom, D3ZoomEvent } from 'd3-zoom';
+import { zoom, ZoomBehavior } from 'd3-zoom';
 import { select } from 'd3-selection';
 import type { UKRegion, MetricType } from '@/types/weather';
 import type { RegionMapData } from '@/lib/mapUtils';
@@ -64,10 +64,10 @@ export function D3UKMap({
   useEffect(() => {
     if (!svgRef.current || !gRef.current) return;
 
-    const zoomBehavior = zoom<SVGSVGElement, unknown>()
+    const zoomBehavior = zoom()
       .scaleExtent([1, 8]) // Min zoom 1x, Max zoom 8x
       .translateExtent([[0, 0], [800, 1000]])
-      .on('zoom', (event: D3ZoomEvent<SVGSVGElement, unknown>) => {
+      .on('zoom', (event: { transform: { toString: () => string } }) => {
         if (gRef.current) {
           select(gRef.current).attr('transform', event.transform.toString());
         }

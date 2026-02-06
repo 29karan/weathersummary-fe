@@ -4,6 +4,7 @@ import { MultiSelect, Text, Stack, Group, Badge } from '@mantine/core';
 import { IconMapPin } from '@tabler/icons-react';
 import { useDashboardStore } from '@/lib/store';
 import { UK_REGIONS } from '@/lib/constants';
+import { UKRegion } from '@/types/weather';
 
 export function RegionFilter() {
   const { filters, updateFilters } = useDashboardStore();
@@ -15,7 +16,7 @@ export function RegionFilter() {
 
   const handleChange = (values: string[]) => {
     updateFilters({
-      regions: values,
+      regions: values as UKRegion[],
     });
   };
 

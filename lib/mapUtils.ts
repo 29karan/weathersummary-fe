@@ -31,14 +31,14 @@ export function getMetricInfo(metric: MetricType | 'temperature_range'): { name:
 
 // Helper to get metric values (both direct and derived)
 export function getMetricValue(data: AnnualWeatherData, metric: MetricType): number | null {
-  if (metric === 'temperature_range') {
-    const min = data.temperature_min?.annual;
-    const max = data.temperature_max?.annual;
-    if (min !== undefined && max !== undefined) {
-      return max - min;
-    }
-    return null;
-  }
+  // if (metric === 'temperature_range') {
+  //   const min = data.temperature_min?.annual;
+  //   const max = data.temperature_max?.annual;
+  //   if (min !== undefined && max !== undefined) {
+  //     return max - min;
+  //   }
+  //   return null;
+  // }
   
   // Standard metric
   return data[metric]?.annual ?? null;
@@ -97,12 +97,12 @@ export function getAllRegionValues(
   MOCK_WEATHER_DATA.filter((d) => d.year === year).forEach((data) => {
     let value: number | undefined;
 
-    if (metric === 'temperature_range') {
-      const val = getMetricValue(data, metric);
-      if (val !== null) value = val;
-    } else {
-      value = data[metric]?.annual;
-    }
+    // if (metric === 'temperature_range') {
+    //   const val = getMetricValue(data, metric);
+    //   if (val !== null) value = val;
+    // } else {
+    //   value = data[metric]?.annual;
+    // }
 
     if (value !== undefined) {
       values.set(data.region, value);
@@ -115,7 +115,7 @@ export function getAllRegionValues(
 // Updated Map Data getter
 export function getMapData(
   year: number,
-  metric: MetricType | 'temperature_range'
+  metric: MetricType 
 ): RegionMapData[] {
   const regionValues = getAllRegionValues(year, metric);
   const values = Array.from(regionValues.values());
@@ -147,7 +147,7 @@ export function getMapData(
 // Updated Range getter
 export function getMetricRange(
   year: number,
-  metric: MetricType | 'temperature_range'
+  metric: MetricType
 ): { min: number; max: number } {
   const values = Array.from(getAllRegionValues(year, metric).values());
 
